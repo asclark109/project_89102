@@ -2,3 +2,22 @@
 Simplified process for manufacture of ethylbenzene from ethylene
 and benzene.
 *END
+
+*COMPONENTS,
+ LIBRARY   1, NAME= 'Hydrogen',
+ LIBRARY  22, NAME= 'Ethylene',
+ LIBRARY   3, NAME= 'Ethane',
+ LIBRARY  40, NAME= 'Benzene',
+ LIBRARY  41, NAME= 'Toluene',
+ LIBRARY  45, NAME= 'Ethylbenzene',
+ LIBRARY  43, NAME= 'm/p-Xylene',
+ LIBRARY 574, NAME= 'Cumene',
+ LIBRARY 611, NAME= 'Diethylbenzenes'
+ LIBRARY 666, NAME= 'Heavies'
+ LIBRARY  51, NAME= 'Water',
+
+*KVALUES, SRK
+*ENTHALPY, SRK
+
+*PROPS
+*UNITS PSIG BTU LB F
