@@ -5,6 +5,14 @@ vapor-phase alkylation reactor at high temperature. Part of the
 ethylene and benzene are fed between reactor beds to absorb heat
 of reaction and prevent overheating. Reactor effluent is used to
 vaporize fresh and recycle benzene to the reactor.
+
+In the first distillation, unreacted benzene is recovered and
+recycled to the reactor. Bottoms from the column is fed to the
+second column, where ethylbenzene product is recovered as
+distillate. The ethylbenezene column bottoms is fed to the third
+column, where diethylbenzene is recovered and recycled to the
+reactor for conversion to more ethylbenzene. The bottoms of third
+column is heavy residue.
 *END
 
 *COMPONENTS,
