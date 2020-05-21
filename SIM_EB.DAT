@@ -1,6 +1,10 @@
 *REMARK
 Simplified process for manufacture of ethylbenzene from ethylene
-and benzene.
+and benzene. Benzene and ethylene are reacted in a multi-bed,
+vapor-phase alkylation reactor at high temperature. Part of the
+ethylene and benzene are fed between reactor beds to absorb heat
+of reaction and prevent overheating. Reactor effluent is used to
+vaporize fresh and recycle benzene to the reactor.
 *END
 
 *COMPONENTS,
@@ -62,6 +66,11 @@ Recycle stream estimates
 
 *HEATEXCH E104C 'Ethylene feed heater, E-104, cold side'
  COLD STREAM 2, OUTLET STREAM 2A, TEMP 250 F, PRES DROP 5 PSI,
+
+*CALCULATOR CALCBZ 'Calculate flow of benzene needed for reactor'
+ ;Set benzene mass flow at 20 times that of feed ethylene
+ BZFLOW = STREAM 2A COMP 2 WT FLOW *20
+ STREAM 3C WT FLOW = BZFLOW ;poke flow into recycle benzene estimate.
 
 *HEATEXCH H101A 'Heat recycled PEB in heater',
  COLD STREAM 8A, OUTLET STREAM 8B, TEMP 400 F, PRES DROP 20 PSIG,
