@@ -22,6 +22,22 @@ and benzene.
 *PROPS
 *UNITS PSIG BTU LB F
 
+*PRINT ONLY STREAM NAMES
+ 1  'Fresh benzene to process'
+ 2  'Cold ethylene feed'
+ 2A 'Hot ethylene to reactor'
+ 3C 'Benzene vapor from vaporizer'
+ 3D 'Benzene for reactor bed 1 to fired heater'
+ 3E 'Quench benzene for remaining reactor beds'
+ 3F 'Benzene for reactor bed 1 from fired heater'
+ 4  'Hot reactor effluent'
+ 8A 'Recycle PEB from pump'
+ 8B 'Recycle PEB from heater'
+
+
+*RECYCLE DEFAULTS, TOLER= 0.0001, TOLER=0.1 LB, TEMP TOLER 0.1 F,
+ BOUNDS -50 0,
+
 *STREAM 1 TEMP 250 F, PRES 250 PSIG, FLOW 10000 LB/HR,
  COMPOS= 0.0 0.0 0.0 99.5 0.5
 
@@ -34,5 +50,38 @@ and benzene.
 *STREAM HPS L/F=0, PRES 600 PSIG, FLOW 1000 LB/HR,
  COMPOS 10*0 1.0; high pressure steam supply
 
+*REMARK
+Recycle stream estimates
+*END
+
+*STREAM 3C TEMP 500 F, PRES 315 PSIG, FLOW 200000 LB/HR,
+ COMPOS= 0.0 0.0 0.0 0.999 0.001
+
+*STREAM 8A TEMP 100 F, PRES 300 PSIG, FLOW 1000 LB/HR,
+ COMPOS= 7*0.0 0.01 0.989 0.001
+
 *HEATEXCH E104C 'Ethylene feed heater, E-104, cold side'
  COLD STREAM 2, OUTLET STREAM 2A, TEMP 250 F, PRES DROP 5 PSI,
+
+*HEATEXCH H101A 'Heat recycled PEB in heater',
+ COLD STREAM 8A, OUTLET STREAM 8B, TEMP 400 F, PRES DROP 20 PSIG,
+
+*SPLIT BED1BZ 'Split off benzene for first reactor bed',
+ FEED IS STREAM 3C,
+ STREAM 3D FLOW = 0.75 OF FEED,
+ STREAM 3E FLOW IS BALANCE,
+
+*HEATEXCH H101B 'Heat bed 1 benzene in heater',
+ COLD STREAM 3D, OUTLET STREAM 3F, TEMP 810 F, PRES DROP 35 PSIG,
+
+*REACTOR R101 'Alkylation reactor, R-101',
+ FEED IS STREAMS 2A 3E 3F 8B, PRODUCT IS STREAM 4,
+ PRES DROP 50 PSI, CALCULATE HEAT,
+ EQUATION 8 -1.0 6 +1.0 2 +0.5, CONVERT 0.050, COMP 8,
+ EQUATION 9 -1.0 4 -1.0 6 +2.0, CONVERT 0.500, COMP 9,
+ NEXT LEVEL,
+ EQUATION 2 -1.0 4 -1.0 6 +1.0, CONVERT 0.883, COMP 2,
+ EQUATION 2 -1.0 4 -1.0 7 +1.0, CONVERT 0.001, COMP 2,
+ EQUATION 2 -1.5 4 -1.0 8 +1.0, CONVERT 0.004, COMP 2,
+ EQUATION 2 -2.0 4 -1.0 9 +1.0, CONVERT 0.100, COMP 2,
+ EQUATION 2 -1.0 4 -2.0 10 +1.0 1 +1.0, CONVERT 0.010, COMP 2,
