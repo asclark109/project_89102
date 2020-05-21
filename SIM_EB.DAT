@@ -195,3 +195,37 @@ Recycle stream estimates
 
  *PUMP P102 'PEB recycle pump, P-102',
  FEED IS STREAM 8, PRODUCT IS STREAM 8A, PRES 300 PSIG, EFFIC 50 %,
+
+*CALCULATOR SUMMARY 'Summary of process results'
+   REPORT 1,(BLOCK E103 'Q-CALC'/1E6)
+ 1 FORMAT(' Reactor benzene preheating (via HPS):',F7.2,' MMBTU/hr')
+   REPORT 2,(BLOCK H101B 'Q-CALC'/1E6)
+ 2 FORMAT(' Fired heater: Benzene superheating: ',F7.2,' MMBTU/hr')
+   REPORT 3,(BLOCK H101A 'Q-CALC'/1E6)
+ 3 FORMAT(' Recycle DEB vaporizing:',F7.2,' MMBTU/hr')
+   QR_C101= BLOCK C101 Q1/1.E6
+   QR_C102= BLOCK C102 Q1/1.E6
+   QR_C103= BLOCK C103 Q1/1.E6
+   REPORT 4,QR_C101
+ 4 FORMAT(' Reboiler duties: Benzene column: ',F7.2,' MMBTU/hr')
+   REPORT 5,QR_C102
+ 5 FORMAT(' EB column: ',F7.2,' MMBTU/hr')
+   REPORT 6,QR_C103
+ 6 FORMAT(' PEB column: ',F7.2,' MMBTU/hr')
+   REPORT 7,(QR_C101 +QR_C102 +QR_C103)
+ 7 FORMAT(' Total: ',F7.2,' MMBTU/hr')
+   REPORT 8,(ABS(BLOCK C101 QC/1.0E6))
+ 8 FORMAT(' Benzene column steam generation: ',F7.2,' MMBTU/hr')
+   REPORT 9,(STREAM 6A COMP 6 WT FRACTION*100)
+ 9 FORMAT(' EB product purity:',F6.2,' %')
+   REPORT 10,(STREAM 6A COMP 4 WT FRACTION*1E6)
+10 FORMAT(' Benzene:',I6,' ppm(wt)')
+   REPORT 11,(STREAM 6A COMP 5 WT FRACTION*1E6)
+11 FORMAT(' Toluene:',I6,' ppm(wt)')
+   REPORT 12,(STREAM 6A COMP 7 WT FRACTION*1E6)
+12 FORMAT(' Xylenes:',I6,' ppm(wt)')
+   REPORT 13,(STREAM 6A COMP 8 WT FRACTION*1E6)
+13 FORMAT(' Cumene: ',I6,' ppm(wt)')
+
+*HCURVE, STREAM 4, PRES 220 PSIG, FROM STREAM CONDITIONS TO DP,
+ VARY TEMP, SIZE=10 F,
