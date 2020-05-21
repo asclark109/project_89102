@@ -126,4 +126,28 @@ Recycle stream estimates
  VAPOR EST FLOW 500 LBMOL/HR, STAGE 19,
  TRACE LEVEL 0
 
+*PUMP P101 'Reactor feed pump, P-101',
+ FEED IS STREAM 3, PROD IS STREAM 3A, PRES 335 PSIG, EFF=68 %,
 
+*HEATEXCH E103 'Reactor feed preheater, E-103',
+ HOT STREAM HPS, L/F=1, PRES 585 PSIG, CALC FLOW,
+ COLD STREAM 3A, OUT STREAM 3B, TEMP=430 F, PRES DROP 5 PSI,
+
+*CALCULATOR E101DUTY 'Set vaporizer duty by difference'
+ ;Hot reactor effluent vaporizes benzene in E-101 and reboils the
+ ;benzene column (E-102); combined duty was calculated before to fixed
+ ;column feed temperature; get the heat available for vaporization and
+ ;superheating the benzene here, and replace the dummy duty value below
+ ;in block E101.
+ BLOCK E101 'Q-SPEC' = BLOCK E101E102 'Q-CALC' -BLOCK C101 Q1
+
+*HEATEXCH E101 'Reactor feed vaporizer, E-101',
+ HOT STREAM 4, OUT STREAM 4A, PRES DROP 5 PSI,
+ COLD STREAM 3B, OUT STREAM 3C, PRES DROP 10 PSI,
+ DUTY= 999 BTU/HR; (duty replaced)
+ WEIGHTED MTD, SECTIONS=10,
+
+*HEATEXCH E102 'Benzene column reboiler, E-102',
+ HOT STREAM 4A, OUT STREAM 4B, TEMP 500 F, PRES DROP 5 PSI,
+ COLD STREAM C101RBFD,
+ WEIGHTED MTD, SECTIONS=10,
