@@ -34,6 +34,9 @@ and benzene.
 *STREAM HPS L/F=0, PRES 600 PSIG, FLOW 1000 LB/HR,
  COMPOS 10*0 1.0; high pressure steam supply
 
+*FLASH EFFLDP 'Check effluent dew point at column inlet pressure',
+ FEED IS STREAM 4B, L/F=0, PRES DROP 0 PSI,
+
 *COLUMN C101 'Benzene recovery column, C-101', STAGES= 45,
  FEED 4B STAGE 20,
  FEED 1 STAGE 44 VARIES,
